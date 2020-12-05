@@ -13,7 +13,7 @@ def parse_requirements(ps):
     return (low, high, ch, password)
 
 
-def valid(low, high, ch, password):
+def valid1(low, high, ch, password):
     count = password.count(ch)
     if low <= count <= high:
         return True
@@ -21,10 +21,20 @@ def valid(low, high, ch, password):
         return False
 
 
+def letter_check(password, ch, position):
+    return password[position-1] == ch
+
+
+def valid2(first, second, ch, password):
+    r = [letter_check(password, ch, first),
+         letter_check(password, ch, second)]
+    return len(list(filter(None, r))) == 1
+
+
 if __name__ == "__main__":
     passwords = []
-    with open('2/sample.txt', 'r') as inFile:
-        # with open('2/input.txt', 'r') as inFile:
+    # with open('2/sample.txt', 'r') as inFile:
+    with open('2/input.txt', 'r') as inFile:
         for line in inFile:
             passwords.append(line.strip())
 
@@ -37,5 +47,5 @@ if __name__ == "__main__":
     #         print("Not Valid!")
 
     results = list(
-        filter(None, [valid(*parse_requirements(p)) for p in passwords]))
+        filter(None, [valid2(*parse_requirements(p)) for p in passwords]))
     print(len(results))
