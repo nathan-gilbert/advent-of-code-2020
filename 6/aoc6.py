@@ -32,6 +32,14 @@ def count_answers(q):
     return len(answers)
 
 
+def count_common_answers(q):
+    people = []
+    for person in q:
+        people.append(set([ch for ch in person]))
+    intersection = set.intersection(*people)
+    return len(intersection)
+
+
 if __name__ == "__main__":
     groups = []
     # with open('6/sample.txt', 'r') as inFile:
@@ -41,7 +49,8 @@ if __name__ == "__main__":
     groups = remove_empty(split_list(groups))
     all_uniques = []
     for question in groups:
-        a = count_answers(question)
+        #a = count_answers(question)
+        a = count_common_answers(question)
         all_uniques.append(a)
         print(question)
         print("unique answers", a)
